@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Quiz</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <a href="../Maindash/index.html" class="back-arrow">
+        <img src="../asset/backarrow.png" alt="Back Arrow"> 
+    </a>
+    
+    <a href="index.html" class="refresh-button">
+        <img src="../asset/refresh.png" alt="Refresh"> 
+    </a>
+
+    <a href="mailto:havox004@gmail.com" class="report-button">
+        <img src="../asset/report.webp" alt="Report">
+    </a>
+
+    <a href="#" class="help-button" id="help-button">
+        <div id="confetti-container"></div>
+        <img src="../asset/help.png" alt="Help">
+    </a>
+
+
+    <!-- Help Popup -->
+    <div id="help-popup" class="help-popup hidden">
+        <button class="close-button" id="close-button">✖</button>
+        <p>The questions made by IISH team may have errors. If any trouble, report with the report option near me.</p>
+    </div>
+    
+    <div class="quiz-container">
+        <!-- Progress Tracker -->
+      
+
+        <!-- Question Box -->
+        <div class="question-box">
+            <p id="question-text"></p> 
+        </div>
+
+        <!-- Answer Box (2x2 grid) -->
+        <div class="answer-box">
+            <button class="answer" id="option1"></button>
+            <button class="answer" id="option2"></button>
+            <button class="answer" id="option3"></button>
+            <button class="answer" id="option4"></button>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

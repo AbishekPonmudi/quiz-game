@@ -1,0 +1,20 @@
+{
+    "name": "quiz_game",
+    "version": "1.0.0",
+    "description": "A project for quizzes and games",
+    "main": "index.html",
+    "scripts": {
+      "start": "live-server", 
+      "build": "echo 'No build step required'", 
+      "deploy": "vercel" 
+    },
+    "dependencies": {
+    
+    },
+    "devDependencies": {
+      "live-server": "^1.2.1" 
+    },
+    "author": "Your Name",
+    "license": "MIT"
+  }
+  
