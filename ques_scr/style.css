@@ -1,0 +1,209 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Body background and styling */
+body {
+    background-color: #9c27b0; /* Vibrant background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    transition: background-color 1s;
+}
+
+/* Loading Screen */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.spinner {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Hide elements */
+.hidden {
+    display: none;
+}
+
+/* Header Buttons */
+.header-buttons {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    gap: 10px; /* Space between back arrow and refresh */
+}
+
+.back-arrow, .refresh-button {
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.back-arrow img, .refresh-button img {
+    width: 20px;
+    height: 20px;
+}
+
+.back-arrow:hover, .refresh-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Progress Tracker */
+.progress-tracker {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+    max-width: 90%;
+}
+
+.progress-circle {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: white;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.progress-line {
+    width: 50px;
+    height: 5px;
+    background-color: #ccc;
+}
+
+.completed {
+    background-color: #4CAF50;
+}
+
+/* Question Box */
+.question-box {
+    text-align: center;
+    margin-bottom: 20px;
+    background-color: #3b4cca; /* Updated to match example */
+    padding: 20px; /* Increased padding for better appearance */
+    border-radius: 10px;
+    color: white;
+    font-size: 22px; /* Adjusted font size */
+    font-weight: bold;
+    width: 90%; /* Adjust for smaller screens */
+    max-width: 600px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    margin: 0 auto;
+}
+
+/* Updated Options Container (2x2 Grid) */
+.options-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 15px;
+    padding: 0 10px;
+}
+
+/* Option Label and Button Styling */
+.option-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.option-label {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #1565c0;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+
+.option-btn {
+    padding: 20px; /* Adjusted for better spacing */
+    background-color: #6a75ca; /* Updated to match example */
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-size: 18px; /* Adjusted font size */
+    font-weight: bold;
+    width: 100%;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.option-btn:hover {
+    background-color: #3b4cca; /* Updated hover color to match example */
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Correct and Incorrect colors */
+.correct {
+    background-color: green;
+    color: white;
+}
+
+.incorrect {
+    background-color: red;
+    color: white;
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+    .progress-circle {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+
+    .question-box {
+        font-size: 20px; /* Adjusted for smaller screens */
+        padding: 15px; /* Adjusted for smaller screens */
+    }
+
+    .option-btn {
+        padding: 15px; /* Adjusted for smaller screens */
+        font-size: 16px; /* Adjusted font size for smaller screens */
+    }
+
+    .option-label {
+        font-size: 16px; /* Adjusted font size */
+        width: 35px; /* Adjusted size */
+        height: 35px; /* Adjusted size */
+    }
+}
