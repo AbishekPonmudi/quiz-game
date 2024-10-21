@@ -100,8 +100,6 @@ const questions = [
         correctAnswer: "Educate the public on water conservation."
     }
 ];
-
-
 // Array of colors for the background
 const backgroundColors = [
     "#3D79F2",
@@ -113,13 +111,71 @@ const backgroundColors = [
 let currentQuestionIndex = 0;
 let totalPoints = 0; // Total points for scoring
 let correctAnswers = 0; // Count of correct answers
-let totalQuestions = questions.length; // Total number of questions
+let shuffledQuestions; // Array to hold shuffled questions
+let totalQuestions; // Total number of questions after shuffling
+let timer; // Holds the interval for the countdown
+let timeLeft = 30; // Time limit for each question in seconds
+const totalTime = 30; // Total time for the countdown
+const timerElement = document.getElementById('timer');
+const timerContainer = document.getElementById('timer-container');
+const progressFill = document.getElementById('progress-fill');
+
+// Selectors for current question tracking
+const currentQuestionElement = document.getElementById('current-question');
+const totalQuestionsElement = document.getElementById('total-questions');
+
+const radius = 30;  // Radius for the circular progress
+const circumference = 2 * Math.PI * radius;  // Circumference of the circle
+
+// Set initial stroke-dasharray and stroke-dashoffset
+progressFill.style.strokeDasharray = circumference;
+progressFill.style.strokeDashoffset = circumference;
+
+// Function to shuffle questions array
+function shuffleQuestions(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+    }
+    return array;
+}
+
+function startTimer() {
+    timeLeft = totalTime; // Reset time for the new question
+    timerElement.textContent = timeLeft; // Show initial time
+    updateProgress(); // Initialize progress bar
+
+    timer = setInterval(() => {
+        timeLeft--;
+        timerElement.textContent = timeLeft;
+        updateProgress(); // Update the progress bar
+
+        // Change to alert state when less than 10 seconds
+        if (timeLeft < 10) {
+            timerContainer.classList.add('alert'); // Add alert class
+        } else {
+            timerContainer.classList.remove('alert'); // Remove alert class if time is more than 10 seconds
+        }
+
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            timerContainer.classList.remove('alert'); // Ensure alert class is removed
+            handleTimeout(); // Move to the next question if time runs out
+        }
+    }, 1000);
+}
+
+
+function updateProgress() {
+    const progress = ((totalTime - timeLeft) / totalTime) * circumference;
+    progressFill.style.strokeDashoffset = circumference - progress;
+}
 
 function loadQuestion() {
     const questionElement = document.getElementById('question-text');
     const optionButtons = Array.from(document.querySelectorAll('.answer'));
     const answerBox = document.querySelector('.answer-box');
-    const currentQuestion = questions[currentQuestionIndex];
+    const currentQuestion = shuffledQuestions[currentQuestionIndex];
 
     // Set the current question text
     questionElement.textContent = currentQuestion.question;
@@ -151,6 +207,37 @@ function loadQuestion() {
 
         btn.onclick = () => handleAnswer(btn, currentQuestion.correctAnswer, optionButtons);
     });
+
+    // Update question number display
+    currentQuestionElement.textContent = currentQuestionIndex + 1;
+    totalQuestionsElement.textContent = totalQuestions;
+
+    clearInterval(timer); // Clear previous timer (if any)
+    startTimer(); // Start a new timer for the current question
+}
+
+function handleTimeout() {
+    const currentQuestion = shuffledQuestions[currentQuestionIndex];
+    const optionButtons = Array.from(document.querySelectorAll('.answer'));
+
+    // Disable all buttons and show the correct answer
+    optionButtons.forEach(b => {
+        b.disabled = true;
+        if (b.textContent === currentQuestion.correctAnswer) {
+            b.style.backgroundColor = "green"; 
+            b.style.color = "white"; 
+        }
+    });
+
+    // Move to the next question after a short delay
+    setTimeout(() => {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < totalQuestions) {
+            loadQuestion();
+        } else {
+            showResultSummary();
+        }
+    }, 1000);
 }
 
 function getRandomColor() {
@@ -158,6 +245,7 @@ function getRandomColor() {
 }
 
 function handleAnswer(selectedButton, correctAnswer, optionButtons) {
+    clearInterval(timer); // Stop the timer once an answer is selected
     const isCorrect = selectedButton.textContent === correctAnswer;
 
     selectedButton.style.backgroundColor = isCorrect ? "green" : "red"; 
@@ -183,13 +271,14 @@ function handleAnswer(selectedButton, correctAnswer, optionButtons) {
     // Load the next question after a delay
     setTimeout(() => {
         currentQuestionIndex++;
-        if (currentQuestionIndex < questions.length) {
+        if (currentQuestionIndex < totalQuestions) {
             loadQuestion();
         } else {
             showResultSummary();
         }
-    }, 1000); 
+    }, 1000);
 }
+
 function showResultSummary() {
     const percentage = (totalPoints / (totalQuestions * 10)) * 100;
     const awarded = percentage >= 60 ? "Granted" : "Not Granted";
@@ -248,32 +337,10 @@ function showResultSummary() {
     };
 }
 
-// Function to show the pop-up
-function showPopup(message) {
-    const popup = document.createElement('div');
-    popup.className = 'popup show'; // Use 'show' class for visibility
-    popup.innerHTML = `
-        <div class="popup-content">
-            <button class="close-btn">&times;</button>
-            <p>${message}</p>
-        </div>
-    `;
-    document.body.appendChild(popup);
-    
-    const closeButton = popup.querySelector('.close-btn');
-    closeButton.onclick = () => {
-        popup.remove();
-    };
-
-    // Remove the pop-up after 5 seconds
-    setTimeout(() => {
-        popup.remove();
-    }, 5000);
-}
-
-
-// Load the first question when the page loads
-loadQuestion();
+// Shuffle questions and set totalQuestions before loading the first question
+shuffledQuestions = shuffleQuestions([...questions]); // Shuffle questions
+totalQuestions = shuffledQuestions.length; // Set total questions after shuffling
+loadQuestion(); // Load the first question
 
 // Adjust layout on window resize
 window.addEventListener('resize', loadQuestion);
