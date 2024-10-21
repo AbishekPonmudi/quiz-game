@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Quiz</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="popup.css">
 </head>
 <body>
     <a href="../Maindash/index.html" class="back-arrow">
@@ -23,7 +23,7 @@
         <div id="confetti-container"></div>
         <img src="../asset/help.png" alt="Help">
     </a>
-
+    
     <!-- Help Popup -->
     <div id="help-popup" class="help-popup">
         <p>The questions made by IISH team may have errors. If any trouble, report with the report option near me.</p>
@@ -31,6 +31,9 @@
     
     <div class="quiz-container">
         <!-- Progress Tracker -->
+        <div class="progress-tracker" style="text-align: center; margin-bottom: 10px;">
+            Question <span id="current-question">1</span> of <span id="total-questions">10</span>
+        </div>
 
         <!-- Question Box -->
         <div class="question-box">
@@ -46,6 +49,17 @@
         </div>
     </div>
 
-    <script src="scripts.js"></script>
+    <!-- Timer Container positioned absolutely to the bottom center -->
+    <div class="timer-container" id="timer-container" style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);">
+        <svg class="progress-ring" width="70" height="70">
+            <!-- Background Circle -->
+            <circle class="progress-bg" cx="35" cy="35" r="31.5"></circle>
+            <!-- Foreground Circle (Progress) -->
+            <circle class="progress-fill" id="progress-fill" cx="35" cy="35" r="30" stroke-dasharray="188" stroke-dashoffset="188"></circle>
+        </svg>
+        <div class="timer" id="timer">30</div>
+    </div>
+    
+    <script src="popup.js"></script>
 </body>
 </html>
