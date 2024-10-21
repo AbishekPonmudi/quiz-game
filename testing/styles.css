@@ -518,3 +518,74 @@ body {
 }
 
 
+.timer-container {
+    position: relative;
+    width: 70px; /* Smaller size */
+    height: 70px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+
+.timer {
+    font-size: 1.3em; /* Adjusted font size */
+    color: black;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* SVG Circle for progress bar border */
+.progress-ring {
+    position: absolute;
+    width: 70px; /* Match the container size */
+    height: 70px;
+    top: 0;
+    left: 0;
+    transform: rotate(-90deg); /* Start progress from the top */
+}
+
+.progress-ring circle {
+    fill: none;
+    stroke-width: 5;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s linear;
+}
+
+.progress-bg {
+    stroke: #e0e0e0; /* Background for progress border */
+}
+
+.progress-fill {
+    stroke: rgb(37, 119, 206); /* Progress border color */
+}
+
+/* Red progress bar and background when time is below 10 seconds */
+.alert .progress-fill {
+    
+    stroke: red;
+}
+
+.alert {
+    background-color: red;
+    position: relative;
+    animation: jump 0.5s infinite;
+}
+
+/* Animation for text jumping */
+@keyframes jump {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px); /* Slight jump */
+    }
+}
+
+/* Elevation effect for timer container */
+.elevated {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
